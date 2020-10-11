@@ -1,0 +1,19 @@
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                        https://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd"
+>
+
+    <document name="App\Domain\VendingMachine\Model\MachineState">
+        <id strategy="INCREMENT"/>
+        <field type="string" name="uuid" />
+        <embed-many field="insertedCoins" target-document="App\Domain\VendingMachine\Model\Coin"/>
+        <indexes>
+            <index>
+                <option name="unique" value="uuid"/>
+                <key name="uuid" />
+            </index>
+        </indexes>
+    </document>
+
+</doctrine-mongo-mapping>
