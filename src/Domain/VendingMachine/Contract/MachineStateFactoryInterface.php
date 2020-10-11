@@ -2,6 +2,7 @@
 
 namespace App\Domain\VendingMachine\Contract;
 
+use App\Domain\ValueObjects\InsertedCoins;
 use App\Domain\VendingMachine\Model\MachineState;
 
 /**
@@ -14,12 +15,12 @@ interface MachineStateFactoryInterface
 {
     /**
      * @param string $uuid
-     * @param iterable $insertedCoins
+     * @param InsertedCoins $insertedCoins
      *
      * @return MachineState
      */
     public static function createMachineState(
         string $uuid,
-        iterable $insertedCoins
+        InsertedCoins $insertedCoins
     ): MachineState;
 }

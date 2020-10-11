@@ -23,12 +23,10 @@ class Coin
     /**
      * Coin constructor.
      *
-     * @param string $id
      * @param float $value
      */
-    public function __construct(string $id, float $value)
+    public function __construct(float $value)
     {
-        $this->id = $id;
         $this->value = $value;
     }
 
@@ -39,12 +37,4 @@ class Coin
     {
         return $this->value;
     }
-
-    public function __serialize(): array
-    {
-        return [
-            "value" => $this->value
-        ];
-    }
-
 }

@@ -5,7 +5,7 @@
 >
 
     <embedded-document name="App\Domain\VendingMachine\Model\Coin" read-only="true">
-        <id strategy="uuid"/>
+        <id />
         <field name="value" type="float"/>
     </embedded-document>
 

@@ -2,6 +2,7 @@
 
 namespace App\Application\Factory;
 
+use App\Domain\ValueObjects\InsertedCoins;
 use App\Domain\VendingMachine\Contract\MachineStateFactoryInterface;
 use App\Domain\VendingMachine\Model\MachineState;
 
@@ -15,15 +16,17 @@ class MachineStateFactory implements MachineStateFactoryInterface
 {
     /**
      * @param string $uuid
-     * @param iterable $insertedCoins
+     * @param InsertedCoins $insertedCoins
      *
      * @return MachineState
      */
-    public static function createMachineState(string $uuid, iterable $insertedCoins): MachineState
-    {
+    public static function createMachineState(
+        string $uuid,
+        InsertedCoins $insertedCoins
+    ): MachineState {
         return new MachineState(
             $uuid,
-            $insertedCoins
+            $insertedCoins->getCoins()
         );
     }
 }
