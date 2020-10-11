@@ -2,6 +2,8 @@
 
 namespace App\Domain\VendingMachine\Model;
 
+use App\Domain\ValueObjects\InsertedCoins;
+
 /**
  * Class MachineState
  *
@@ -10,6 +12,13 @@ namespace App\Domain\VendingMachine\Model;
  */
 class MachineState
 {
+    const ACCEPTED_COINS = [
+        0.05,
+        0.10,
+        0.25,
+        1.00,
+    ];
+
     /**
      * @var int
      */
@@ -29,12 +38,14 @@ class MachineState
      * MachineState constructor.
      *
      * @param string $uuid
-     * @param iterable $insertedCoins
+     * @param InsertedCoins $insertedCoins
      */
-    public function __construct(string $uuid, iterable $insertedCoins)
-    {
+    public function __construct(
+        string $uuid,
+        InsertedCoins $insertedCoins
+    ) {
         $this->uuid = $uuid;
-        $this->insertedCoins = $insertedCoins;
+        $this->insertedCoins = $insertedCoins->getCoins();
     }
 
     /**

@@ -26,7 +26,7 @@ class MachineStateFactory implements MachineStateFactoryInterface
     ): MachineState {
         return new MachineState(
             $uuid,
-            $insertedCoins->getCoins()
+            $insertedCoins
         );
     }
 }

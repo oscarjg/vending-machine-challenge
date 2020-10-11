@@ -3,7 +3,8 @@
 namespace Tests\Application\Factory;
 
 use App\Application\Factory\MachineStateFactory;
-use App\Domain\Exceptions\InsertedCoinsException;
+use App\Domain\Exceptions\InvalidInsertedCoinInstanceException;
+use App\Domain\Exceptions\InvalidInsertedCoinValueException;
 use App\Domain\ValueObjects\InsertedCoins;
 use App\Domain\VendingMachine\Model\Coin;
 use App\Domain\VendingMachine\Model\MachineState;
@@ -38,9 +39,12 @@ class MachineStateFactoryTest extends AbstractTestCase
         $this->assertCount(count($insertedCoins->getCoins()), $machineState->getInsertedCoins());
     }
 
+    /**
+     * @throws InvalidInsertedCoinInstanceException
+     */
     public function testInvalidCoinsInserted()
     {
-        $this->expectException(InsertedCoinsException::class);
+        $this->expectException(InvalidInsertedCoinInstanceException::class);
 
         $machineState = MachineStateFactory::createMachineState(
             "some-uuid",
@@ -52,8 +56,24 @@ class MachineStateFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @throws InvalidInsertedCoinInstanceException
+     */
+    public function testInvalidCoinsValuesInserted()
+    {
+        $this->expectException(InvalidInsertedCoinValueException::class);
+
+        $machineState = MachineStateFactory::createMachineState(
+            "some-uuid",
+            new InsertedCoins([
+                new Coin(1.00),
+                new Coin(1.50),
+            ])
+        );
+    }
+
+    /**
      * @return array[]
-     * @throws InsertedCoinsException
+     * @throws InvalidInsertedCoinInstanceException
      */
     public function data(): array
     {

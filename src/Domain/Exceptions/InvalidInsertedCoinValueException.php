@@ -3,12 +3,12 @@
 namespace App\Domain\Exceptions;
 
 /**
- * Class InsertedCoinsException
+ * Class InvalidInsertedCoinValueException
  *
  * @author Oscar Jimenez <oscarjg19.developer@gmail.com>
  * @package App\Domain\Exceptions
  */
-class InsertedCoinsException extends \Exception
+class InvalidInsertedCoinValueException extends \Exception
 {
 
 }

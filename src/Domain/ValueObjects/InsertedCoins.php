@@ -2,8 +2,10 @@
 
 namespace App\Domain\ValueObjects;
 
-use App\Domain\Exceptions\InsertedCoinsException;
+use App\Domain\Exceptions\InvalidInsertedCoinInstanceException;
+use App\Domain\Exceptions\InvalidInsertedCoinValueException;
 use App\Domain\VendingMachine\Model\Coin;
+use App\Domain\VendingMachine\Model\MachineState;
 
 /**
  * Class InsertedCoins
@@ -23,7 +25,7 @@ class InsertedCoins
      *
      * @param iterable $coins
      *
-     * @throws InsertedCoinsException
+     * @throws InvalidInsertedCoinInstanceException
      */
     public function __construct(iterable $coins)
     {
@@ -41,16 +43,25 @@ class InsertedCoins
     }
 
     /**
-     * @throws InsertedCoinsException
+     * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
-    private function validate()
+    private function validate(): void
     {
         foreach ($this->coins as $coin) {
-            if ($coin instanceof Coin) {
-                continue;
+            if (!$coin instanceof Coin) {
+                throw new InvalidInsertedCoinInstanceException("Invalid Coin instance received");
             }
 
-            throw new InsertedCoinsException("Invalid Coin instance received");
+            if (!in_array($coin->getValue(), MachineState::ACCEPTED_COINS)) {
+                throw new InvalidInsertedCoinValueException(
+                    sprintf(
+                        'Invalid Coin value. Only %s are accepted, %s received',
+                        implode(",", MachineState::ACCEPTED_COINS),
+                        $coin->getValue()
+                    )
+                );
+            }
         }
     }
 }
