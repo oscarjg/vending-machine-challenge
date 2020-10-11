@@ -13,9 +13,14 @@ use App\Domain\VendingMachine\Model\MachineState;
  */
 class HasProductSelectedValidator implements VendingMachineValidatorInterface
 {
+    /**
+     * @param MachineState $machineState
+     *
+     * @return bool
+     */
     public function isValid(MachineState $machineState): bool
     {
-        return $machineState->getItemSelected() !== null;
+        return $machineState->productSelected() !== null;
     }
 
     public function message(): string

@@ -47,7 +47,7 @@ class RefundMoneyUseCase
             new CoinCollector([]),
             new Inventory($machineState->getItems()),
             new CoinCollector($machineState->getChange()),
-            $machineState->getItemSelected()
+            $machineState->getItemSelector()
         );
     }
 }

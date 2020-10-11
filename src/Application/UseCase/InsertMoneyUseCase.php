@@ -55,7 +55,7 @@ class InsertMoneyUseCase
             new CoinCollector($currentInsertedMoney),
             new Inventory($machineState->getItems()),
             new CoinCollector($machineState->getChange()),
-            $machineState->getItemSelected()
+            $machineState->getItemSelector()
         );
     }
 }

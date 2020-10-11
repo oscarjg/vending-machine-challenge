@@ -49,7 +49,7 @@ class MachineStateFactoryTest extends AbstractTestCase
         $this->assertEquals($uuid, $machineState->getUuid());
         $this->assertEquals($insertedCoins->getCoins(), $machineState->getInsertedCoins());
         $this->assertEquals($inventory->getItems(), $machineState->getItems());
-        $this->assertEquals($itemSelected, $machineState->getItemSelected());
+        $this->assertEquals($itemSelected, $machineState->getItemSelector());
         $this->assertEquals($change->getCoins(), $machineState->getChange());
     }
 
@@ -69,7 +69,7 @@ class MachineStateFactoryTest extends AbstractTestCase
             ]),
             $this->emptyInventory(),
             $this->emptyCoinsCollector(),
-            $this->defaultItemSelected()
+            $this->defaultItemSelector()
         );
     }
 
@@ -89,7 +89,7 @@ class MachineStateFactoryTest extends AbstractTestCase
                 new \stdClass(),
                 new \stdClass(),
             ]),
-            $this->defaultItemSelected()
+            $this->defaultItemSelector()
         );
     }
 
@@ -109,7 +109,7 @@ class MachineStateFactoryTest extends AbstractTestCase
             ]),
             $this->emptyInventory(),
             $this->emptyCoinsCollector(),
-            $this->defaultItemSelected()
+            $this->defaultItemSelector()
         );
     }
 
@@ -126,7 +126,7 @@ class MachineStateFactoryTest extends AbstractTestCase
                 $this->emptyCoinsCollector(),
                 $this->emptyInventory(),
                 $this->emptyCoinsCollector(),
-                $this->defaultItemSelected()
+                $this->defaultItemSelector()
             ],
             [
                 "foo-id",
@@ -141,7 +141,7 @@ class MachineStateFactoryTest extends AbstractTestCase
                     new Coin(1.00),
                     new Coin(1.00),
                 ]),
-                $this->defaultItemSelected()
+                $this->defaultItemSelector()
             ]
         ];
     }

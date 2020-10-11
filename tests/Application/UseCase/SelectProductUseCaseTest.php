@@ -32,7 +32,7 @@ class SelectProductUseCaseTest extends AbstractTestCase
             $selection
         );
 
-        $this->assertEquals($selection, $state->getItemSelected());
+        $this->assertEquals($selection, $state->getItemSelector());
     }
 
     /**

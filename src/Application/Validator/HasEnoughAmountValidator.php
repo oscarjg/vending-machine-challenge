@@ -13,22 +13,20 @@ use App\Domain\VendingMachine\Model\MachineState;
  */
 class HasEnoughAmountValidator implements VendingMachineValidatorInterface
 {
+    /**
+     * @param MachineState $machineState
+     *
+     * @return bool
+     */
     public function isValid(MachineState $machineState): bool
     {
-        $isValid = true;
-        $itemSelected = $machineState->getItemSelected();
-        $amount = $machineState->totalAmount();
-
-        foreach ($machineState->getItems() as $item) {
-            if ($item->getSelector() !== $itemSelected) {
-                continue;
-            }
-
-            $isValid = $item->getProduct()->getPrice() <= $amount;
-            break;
+        if ($machineState->productSelected() === null) {
+            return false;
         }
 
-        return $isValid;
+        $amount = $machineState->totalAmount();
+
+        return $machineState->productSelected()->getPrice() <= $amount;
     }
 
     public function message(): string

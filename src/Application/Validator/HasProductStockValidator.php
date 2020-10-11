@@ -13,21 +13,20 @@ use App\Domain\VendingMachine\Model\MachineState;
  */
 class HasProductStockValidator implements VendingMachineValidatorInterface
 {
+    /**
+     * @param MachineState $machineState
+     *
+     * @return bool
+     */
     public function isValid(MachineState $machineState): bool
     {
-        $isValid = true;
-        $itemSelected = $machineState->getItemSelected();
+        $itemSelected = $machineState->itemSelected();
 
-        foreach ($machineState->getItems() as $item) {
-            if ($item->getSelector() !== $itemSelected) {
-                continue;
-            }
-
-            $isValid = $item->getQuantity() > 0;
-            break;
+        if ($itemSelected === null) {
+            return false;
         }
 
-        return $isValid;
+        return $itemSelected->getQuantity() > 0;
     }
 
     public function message(): string

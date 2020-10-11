@@ -92,7 +92,7 @@ abstract class AbstractTestCase extends TestCase
     /**
      * @return int
      */
-    protected function defaultItemSelected(): int
+    protected function defaultItemSelector(): int
     {
         return 1;
     }

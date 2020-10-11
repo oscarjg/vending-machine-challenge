@@ -38,7 +38,7 @@ class MachineState
     /**
      * @var ?int
      */
-    protected ?int $itemSelected;
+    protected ?int $itemSelector;
 
     /**
      * @var Item[]
@@ -57,20 +57,20 @@ class MachineState
      * @param CoinCollector $insertedCoins
      * @param Inventory $inventory
      * @param CoinCollector $change
-     * @param int|null $itemSelected
+     * @param int|null $itemSelector
      */
     public function __construct(
         string $uuid,
         CoinCollector $insertedCoins,
         Inventory $inventory,
         CoinCollector $change,
-        ?int $itemSelected = null
+        ?int $itemSelector = null
     ) {
         $this->uuid = $uuid;
         $this->insertedCoins = $insertedCoins->getCoins();
         $this->items = $inventory->getItems();
         $this->change = $change->getCoins();
-        $this->itemSelected = $itemSelected;
+        $this->itemSelector = $itemSelector;
     }
 
     /**
@@ -100,9 +100,9 @@ class MachineState
     /**
      * @return int|null
      */
-    public function getItemSelected(): ?int
+    public function getItemSelector(): ?int
     {
-        return $this->itemSelected;
+        return $this->itemSelector;
     }
 
     /**
@@ -139,5 +139,40 @@ class MachineState
         return array_reduce($this->change, function (int $acc, Coin $coin) {
             return $acc + $coin->getValue();
         }, 0);
+    }
+
+    /**
+     * @return Item|null
+     */
+    public function itemSelected(): ?Item
+    {
+        $itemSelected = null;
+
+        foreach ($this->items as $item) {
+            if ($item->getSelector() !== $this->itemSelector) {
+                continue;
+            }
+
+            $itemSelected = $item;
+            break;
+        }
+
+        return $itemSelected;
+    }
+
+    /**
+     * @return Product|null
+     */
+    public function productSelected(): ?Product
+    {
+        $product = null;
+
+        $item = $this->itemSelected();
+
+        if ($item === null) {
+            return null;
+        }
+
+        return  $item->getProduct();
     }
 }
