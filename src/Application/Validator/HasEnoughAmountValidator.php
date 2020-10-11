@@ -6,24 +6,25 @@ use App\Domain\VendingMachine\Contract\VendingMachineValidatorInterface;
 use App\Domain\VendingMachine\Model\MachineState;
 
 /**
- * Class HasProductStockValidator
+ * Class HasEnoughAmountValidator
  *
  * @author Oscar Jimenez <oscarjg19.developer@gmail.com>
  * @package App\Application\Validator
  */
-class HasProductStockValidator implements VendingMachineValidatorInterface
+class HasEnoughAmountValidator implements VendingMachineValidatorInterface
 {
     public function isValid(MachineState $machineState): bool
     {
         $isValid = true;
         $itemSelected = $machineState->getItemSelected();
+        $amount = $machineState->totalAmount();
 
         foreach ($machineState->getItems() as $item) {
             if ($item->getSelector() !== $itemSelected) {
                 continue;
             }
 
-            $isValid = $item->getQuantity() > 0;
+            $isValid = $item->getProduct()->getPrice() <= $amount;
             break;
         }
 
@@ -32,6 +33,6 @@ class HasProductStockValidator implements VendingMachineValidatorInterface
 
     public function message(): string
     {
-        return "There aren't enough stock for this product";
+        return "There aren't enough coins to buy this product";
     }
 }

@@ -38,7 +38,7 @@ class HasProductStockValidatorTest extends AbstractTestCase
     /**
      * @throws InvalidInsertedCoinInstanceException
      */
-    public function testIsInValid()
+    public function testIsNotValid()
     {
         $validator = new HasProductStockValidator();
 

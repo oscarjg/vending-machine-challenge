@@ -104,4 +104,14 @@ class MachineState
     {
         return $this->items;
     }
+
+    /**
+     * @return mixed
+     */
+    public function totalAmount(): float
+    {
+        return array_reduce($this->insertedCoins, function (int $acc, Coin $coin) {
+            return $acc + $coin->getValue();
+        }, 0);
+    }
 }
