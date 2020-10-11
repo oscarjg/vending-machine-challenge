@@ -22,7 +22,7 @@ class HasEnoughAmountValidatorTest extends AbstractTestCase
      * @throws InvalidInsertedCoinInstanceException
      * @throws InvalidInsertedCoinValueException
      */
-    public function testEmptyBalance()
+    public function testEmptyAmount()
     {
         $validator = new HasEnoughAmountValidator();
 
@@ -40,7 +40,7 @@ class HasEnoughAmountValidatorTest extends AbstractTestCase
      * @throws InvalidInsertedCoinInstanceException
      * @throws InvalidInsertedCoinValueException
      */
-    public function testNotEnoughBalance()
+    public function testNotEnoughAmount()
     {
         $validator = new HasEnoughAmountValidator();
 
@@ -61,7 +61,7 @@ class HasEnoughAmountValidatorTest extends AbstractTestCase
      * @throws InvalidInsertedCoinInstanceException
      * @throws InvalidInsertedCoinValueException
      */
-    public function testExactBalance()
+    public function testExactAmount()
     {
         $validator = new HasEnoughAmountValidator();
 
@@ -81,7 +81,7 @@ class HasEnoughAmountValidatorTest extends AbstractTestCase
      * @throws InvalidInsertedCoinInstanceException
      * @throws InvalidInsertedCoinValueException
      */
-    public function testEnoughBalance()
+    public function testEnoughAmount()
     {
         $validator = new HasEnoughAmountValidator();
 
