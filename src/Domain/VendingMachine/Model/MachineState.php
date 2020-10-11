@@ -3,6 +3,7 @@
 namespace App\Domain\VendingMachine\Model;
 
 use App\Domain\ValueObjects\InsertedCoins;
+use App\Domain\ValueObjects\Inventory;
 
 /**
  * Class MachineState
@@ -35,17 +36,33 @@ class MachineState
     protected iterable $insertedCoins;
 
     /**
+     * @var ?int
+     */
+    protected ?int $itemSelected;
+
+    /**
+     * @var Item[]
+     */
+    protected iterable $items;
+
+    /**
      * MachineState constructor.
      *
      * @param string $uuid
      * @param InsertedCoins $insertedCoins
+     * @param Inventory $inventory
+     * @param int|null $itemSelected
      */
     public function __construct(
         string $uuid,
-        InsertedCoins $insertedCoins
+        InsertedCoins $insertedCoins,
+        Inventory $inventory,
+        ?int $itemSelected = null
     ) {
         $this->uuid = $uuid;
         $this->insertedCoins = $insertedCoins->getCoins();
+        $this->items = $inventory->getItems();
+        $this->itemSelected = $itemSelected;
     }
 
     /**
@@ -70,5 +87,21 @@ class MachineState
     public function getInsertedCoins(): iterable
     {
         return $this->insertedCoins;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getItemSelected(): ?int
+    {
+        return $this->itemSelected;
+    }
+
+    /**
+     * @return Item[]
+     */
+    public function getItems(): array
+    {
+        return $this->items;
     }
 }

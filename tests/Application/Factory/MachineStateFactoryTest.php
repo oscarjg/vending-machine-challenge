@@ -6,8 +6,11 @@ use App\Application\Factory\MachineStateFactory;
 use App\Domain\Exceptions\InvalidInsertedCoinInstanceException;
 use App\Domain\Exceptions\InvalidInsertedCoinValueException;
 use App\Domain\ValueObjects\InsertedCoins;
+use App\Domain\ValueObjects\Inventory;
 use App\Domain\VendingMachine\Model\Coin;
+use App\Domain\VendingMachine\Model\Item;
 use App\Domain\VendingMachine\Model\MachineState;
+use App\Domain\VendingMachine\Model\Product;
 use Tests\AbstractTestCase;
 
 /**
@@ -21,22 +24,29 @@ class MachineStateFactoryTest extends AbstractTestCase
     /**
      * @param string $uuid
      * @param InsertedCoins $insertedCoins
+     * @param Inventory $inventory
+     * @param int|null $itemSelected
      *
      * @dataProvider data
      */
     public function testCreateMachineStateInstance(
         string $uuid,
-        InsertedCoins $insertedCoins
+        InsertedCoins $insertedCoins,
+        Inventory $inventory,
+        ?int $itemSelected
     ) {
         $machineState = MachineStateFactory::createMachineState(
             $uuid,
-            $insertedCoins
+            $insertedCoins,
+            $inventory,
+            $itemSelected
         );
 
         $this->assertInstanceOf(MachineState::class, $machineState);
         $this->assertEquals($uuid, $machineState->getUuid());
         $this->assertEquals($insertedCoins->getCoins(), $machineState->getInsertedCoins());
-        $this->assertCount(count($insertedCoins->getCoins()), $machineState->getInsertedCoins());
+        $this->assertEquals($inventory->getItems(), $machineState->getItems());
+        $this->assertEquals($itemSelected, $machineState->getItemSelected());
     }
 
     /**
@@ -46,12 +56,14 @@ class MachineStateFactoryTest extends AbstractTestCase
     {
         $this->expectException(InvalidInsertedCoinInstanceException::class);
 
-        $machineState = MachineStateFactory::createMachineState(
+        MachineStateFactory::createMachineState(
             "some-uuid",
             new InsertedCoins([
                 new \stdClass(),
                 new \stdClass(),
-            ])
+            ]),
+            $this->emptyInventory(),
+            $this->defaultItemSelected()
         );
     }
 
@@ -62,12 +74,14 @@ class MachineStateFactoryTest extends AbstractTestCase
     {
         $this->expectException(InvalidInsertedCoinValueException::class);
 
-        $machineState = MachineStateFactory::createMachineState(
+        MachineStateFactory::createMachineState(
             "some-uuid",
             new InsertedCoins([
                 new Coin(1.00),
                 new Coin(1.50),
-            ])
+            ]),
+            $this->emptyInventory(),
+            $this->defaultItemSelected()
         );
     }
 
@@ -80,7 +94,9 @@ class MachineStateFactoryTest extends AbstractTestCase
         return [
             [
                 "foo-id",
-                new InsertedCoins([])
+                $this->emptyInsertedCoins(),
+                $this->emptyInventory(),
+                $this->defaultItemSelected()
             ],
             [
                 "foo-id",
@@ -88,7 +104,9 @@ class MachineStateFactoryTest extends AbstractTestCase
                     new Coin(1.00),
                     new Coin(1.00),
                     new Coin(0.25),
-                ])
+                ]),
+                $this->defaultInventory(),
+                $this->defaultItemSelected()
             ]
         ];
     }

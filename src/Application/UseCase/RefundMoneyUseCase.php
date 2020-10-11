@@ -5,6 +5,7 @@ namespace App\Application\UseCase;
 use App\Application\Factory\MachineStateFactory;
 use App\Domain\Exceptions\InvalidInsertedCoinInstanceException;
 use App\Domain\ValueObjects\InsertedCoins;
+use App\Domain\ValueObjects\Inventory;
 use App\Domain\VendingMachine\Contract\MachineStateUuidGeneratorInterface;
 use App\Domain\VendingMachine\Model\MachineState;
 
@@ -41,7 +42,9 @@ class RefundMoneyUseCase
     {
         return MachineStateFactory::createMachineState(
             $this->uuidGenerator->generate(),
-            new InsertedCoins([])
+            new InsertedCoins([]),
+            new Inventory($machineState->getItems()),
+            $machineState->getItemSelected()
         );
     }
 }
