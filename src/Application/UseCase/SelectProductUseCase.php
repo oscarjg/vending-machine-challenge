@@ -4,8 +4,9 @@ namespace App\Application\UseCase;
 
 use App\Application\Factory\MachineStateFactory;
 use App\Domain\Exceptions\InvalidInsertedCoinInstanceException;
+use App\Domain\Exceptions\InvalidInsertedCoinValueException;
 use App\Domain\Exceptions\InvalidProductSelectionValueException;
-use App\Domain\ValueObjects\InsertedCoins;
+use App\Domain\ValueObjects\CoinCollector;
 use App\Domain\ValueObjects\Inventory;
 use App\Domain\VendingMachine\Contract\MachineStateUuidGeneratorInterface;
 use App\Domain\VendingMachine\Model\Item;
@@ -41,6 +42,7 @@ class SelectProductUseCase
      * @return MachineState
      * @throws InvalidInsertedCoinInstanceException
      * @throws InvalidProductSelectionValueException
+     * @throws InvalidInsertedCoinValueException
      */
     public function __invoke(MachineState $machineState, int $productSelection): MachineState
     {
@@ -48,8 +50,9 @@ class SelectProductUseCase
 
         return MachineStateFactory::createMachineState(
             $this->uuidGenerator->generate(),
-            new InsertedCoins([]),
+            new CoinCollector([]),
             new Inventory($machineState->getItems()),
+            new CoinCollector($machineState->getChange()),
             $productSelection
         );
     }

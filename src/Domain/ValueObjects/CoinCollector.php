@@ -8,12 +8,12 @@ use App\Domain\VendingMachine\Model\Coin;
 use App\Domain\VendingMachine\Model\MachineState;
 
 /**
- * Class InsertedCoins
+ * Class CoinCollector
  *
  * @author Oscar Jimenez <oscarjg19.developer@gmail.com>
  * @package App\Domain\ValueObjects
  */
-class InsertedCoins
+class CoinCollector
 {
     /**
      * @var iterable
@@ -26,6 +26,7 @@ class InsertedCoins
      * @param iterable $coins
      *
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     public function __construct(iterable $coins)
     {

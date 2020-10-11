@@ -4,7 +4,8 @@ namespace Tests\Application\Validator;
 
 use App\Application\Validator\HasProductStockValidator;
 use App\Domain\Exceptions\InvalidInsertedCoinInstanceException;
-use App\Domain\ValueObjects\InsertedCoins;
+use App\Domain\Exceptions\InvalidInsertedCoinValueException;
+use App\Domain\ValueObjects\CoinCollector;
 use App\Domain\ValueObjects\Inventory;
 use App\Domain\VendingMachine\Model\Item;
 use App\Domain\VendingMachine\Model\MachineState;
@@ -37,6 +38,7 @@ class HasProductStockValidatorTest extends AbstractTestCase
 
     /**
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     public function testIsNotValid()
     {
@@ -57,13 +59,15 @@ class HasProductStockValidatorTest extends AbstractTestCase
      *
      * @return MachineState
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     private function machineState(int $itemSelected, Inventory $inventory): MachineState
     {
         return new MachineState(
             "uuid",
-            new InsertedCoins([]),
+            new CoinCollector([]),
             $inventory,
+            $this->defaultChange(),
             $itemSelected
         );
     }

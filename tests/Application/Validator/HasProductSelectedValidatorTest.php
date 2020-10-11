@@ -4,7 +4,8 @@ namespace Tests\Application\Validator;
 
 use App\Application\Validator\HasProductSelectedValidator;
 use App\Domain\Exceptions\InvalidInsertedCoinInstanceException;
-use App\Domain\ValueObjects\InsertedCoins;
+use App\Domain\Exceptions\InvalidInsertedCoinValueException;
+use App\Domain\ValueObjects\CoinCollector;
 use App\Domain\VendingMachine\Model\MachineState;
 use Tests\AbstractTestCase;
 
@@ -47,13 +48,15 @@ class HasProductSelectedValidatorTest extends AbstractTestCase
     /**
      * @return MachineState
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     private function invalidMachineState(): MachineState
     {
         return new MachineState(
             "uuid",
-            new InsertedCoins([]),
+            new CoinCollector([]),
             $this->defaultInventory(),
+            $this->defaultChange(),
             null
         );
     }
@@ -61,13 +64,15 @@ class HasProductSelectedValidatorTest extends AbstractTestCase
     /**
      * @return MachineState
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     private function validMachineState(): MachineState
     {
         return new MachineState(
             "uuid",
-            new InsertedCoins([]),
+            new CoinCollector([]),
             $this->defaultInventory(),
+            $this->defaultChange(),
             1
         );
     }

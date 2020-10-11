@@ -18,6 +18,7 @@ class InsertMoneyUseCaseTest extends AbstractTestCase
 {
     /**
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     public function testUseCase()
     {

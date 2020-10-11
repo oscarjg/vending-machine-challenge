@@ -4,7 +4,8 @@ namespace Tests\Application\Validator;
 
 use App\Application\Validator\HasEnoughAmountValidator;
 use App\Domain\Exceptions\InvalidInsertedCoinInstanceException;
-use App\Domain\ValueObjects\InsertedCoins;
+use App\Domain\Exceptions\InvalidInsertedCoinValueException;
+use App\Domain\ValueObjects\CoinCollector;
 use App\Domain\VendingMachine\Model\Coin;
 use App\Domain\VendingMachine\Model\MachineState;
 use Tests\AbstractTestCase;
@@ -19,6 +20,7 @@ class HasEnoughAmountValidatorTest extends AbstractTestCase
 {
     /**
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     public function testEmptyBalance()
     {
@@ -36,6 +38,7 @@ class HasEnoughAmountValidatorTest extends AbstractTestCase
 
     /**
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     public function testNotEnoughBalance()
     {
@@ -56,6 +59,7 @@ class HasEnoughAmountValidatorTest extends AbstractTestCase
 
     /**
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     public function testExactBalance()
     {
@@ -75,6 +79,7 @@ class HasEnoughAmountValidatorTest extends AbstractTestCase
 
     /**
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     public function testEnoughBalance()
     {
@@ -94,17 +99,20 @@ class HasEnoughAmountValidatorTest extends AbstractTestCase
     }
 
     /**
-     * @param InsertedCoins $insertedCoins
+     * @param CoinCollector $insertedCoins
      * @param int $itemSelected
      *
      * @return MachineState
+     * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
-    private function machineState(InsertedCoins $insertedCoins, int $itemSelected): MachineState
+    private function machineState(CoinCollector $insertedCoins, int $itemSelected): MachineState
     {
         return new MachineState(
             "uuid",
             $insertedCoins,
             $this->defaultInventory(),
+            $this->emptyCoinsCollector(),
             $itemSelected
         );
     }
@@ -112,11 +120,12 @@ class HasEnoughAmountValidatorTest extends AbstractTestCase
     /**
      * @param array $coins
      *
-     * @return InsertedCoins
+     * @return CoinCollector
      * @throws InvalidInsertedCoinInstanceException
+     * @throws \App\Domain\Exceptions\InvalidInsertedCoinValueException
      */
-    private function insertedCoins(array $coins): InsertedCoins
+    private function insertedCoins(array $coins): CoinCollector
     {
-        return new InsertedCoins($coins);
+        return new CoinCollector($coins);
     }
 }

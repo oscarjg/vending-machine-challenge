@@ -3,9 +3,11 @@
 namespace Tests;
 
 use App\Domain\Exceptions\InvalidInsertedCoinInstanceException;
-use App\Domain\ValueObjects\InsertedCoins;
+use App\Domain\Exceptions\InvalidInsertedCoinValueException;
+use App\Domain\ValueObjects\CoinCollector;
 use App\Domain\ValueObjects\Inventory;
 use App\Domain\VendingMachine\Contract\MachineStateUuidGeneratorInterface;
+use App\Domain\VendingMachine\Model\Coin;
 use App\Domain\VendingMachine\Model\Item;
 use App\Domain\VendingMachine\Model\MachineState;
 use App\Domain\VendingMachine\Model\Product;
@@ -22,14 +24,39 @@ abstract class AbstractTestCase extends TestCase
     /**
      * @return MachineState
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     protected function initialState(): MachineState
     {
         return new MachineState(
             "uuid",
-            new InsertedCoins([]),
-            $this->defaultInventory()
+            new CoinCollector([]),
+            $this->defaultInventory(),
+            $this->defaultChange(),
+            null
         );
+    }
+
+    /**
+     * @return CoinCollector
+     * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
+     */
+    protected function defaultChange()
+    {
+        /**
+         * @var Coin[]
+         */
+        $coins = [];
+
+        for ($x = 0; $x < 10; $x++) {
+            $coins[] = new Coin(0.05);
+            $coins[] = new Coin(0.10);
+            $coins[] = new Coin(0.25);
+            $coins[] = new Coin(1.00);
+        }
+
+        return new CoinCollector($coins);
     }
 
     /**
@@ -45,12 +72,13 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * @return InsertedCoins
+     * @return CoinCollector
      * @throws InvalidInsertedCoinInstanceException
+     * @throws \App\Domain\Exceptions\InvalidInsertedCoinValueException
      */
-    protected function emptyInsertedCoins(): InsertedCoins
+    protected function emptyCoinsCollector(): CoinCollector
     {
-        return new InsertedCoins([]);
+        return new CoinCollector([]);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Domain\VendingMachine\Model;
 
-use App\Domain\ValueObjects\InsertedCoins;
+use App\Domain\ValueObjects\CoinCollector;
 use App\Domain\ValueObjects\Inventory;
 
 /**
@@ -46,22 +46,30 @@ class MachineState
     protected iterable $items;
 
     /**
+     * @var iterable
+     */
+    protected iterable $change;
+
+    /**
      * MachineState constructor.
      *
      * @param string $uuid
-     * @param InsertedCoins $insertedCoins
+     * @param CoinCollector $insertedCoins
      * @param Inventory $inventory
+     * @param CoinCollector $change
      * @param int|null $itemSelected
      */
     public function __construct(
         string $uuid,
-        InsertedCoins $insertedCoins,
+        CoinCollector $insertedCoins,
         Inventory $inventory,
+        CoinCollector $change,
         ?int $itemSelected = null
     ) {
         $this->uuid = $uuid;
         $this->insertedCoins = $insertedCoins->getCoins();
         $this->items = $inventory->getItems();
+        $this->change = $change->getCoins();
         $this->itemSelected = $itemSelected;
     }
 
@@ -106,11 +114,29 @@ class MachineState
     }
 
     /**
+     * @return iterable
+     */
+    public function getChange(): iterable
+    {
+        return $this->change;
+    }
+
+    /**
      * @return mixed
      */
     public function totalAmount(): float
     {
         return array_reduce($this->insertedCoins, function (int $acc, Coin $coin) {
+            return $acc + $coin->getValue();
+        }, 0);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function totalChange(): float
+    {
+        return array_reduce($this->change, function (int $acc, Coin $coin) {
             return $acc + $coin->getValue();
         }, 0);
     }
