@@ -28,7 +28,7 @@ class InsertMoneyUseCaseTest extends AbstractTestCase
         $coins = [0.25, 0.25, 1.00];
 
         foreach ($coins as $key => $coinValue) {
-            $state = $useCase->__invoke(
+            $state = $useCase(
                 $state,
                 $coinValue
             );
