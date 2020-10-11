@@ -12,7 +12,7 @@ use App\Domain\ValueObjects\InsertedCoins;
  */
 class MachineState
 {
-    const ACCEPTED_COINS = [
+    public const ACCEPTED_COINS = [
         0.05,
         0.10,
         0.25,

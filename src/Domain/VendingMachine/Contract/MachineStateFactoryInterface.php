@@ -15,7 +15,7 @@ interface MachineStateFactoryInterface
 {
     /**
      * @param string $uuid
-     * @param InsertedCoins $insertedCoins
+     * @param iterable $insertedCoins
      *
      * @return MachineState
      */
