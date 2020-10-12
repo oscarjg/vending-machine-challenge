@@ -6,6 +6,7 @@ use App\Domain\Exceptions\InvalidInsertedCoinInstanceException;
 use App\Domain\Exceptions\InvalidInsertedCoinValueException;
 use App\Domain\ValueObjects\CoinCollector;
 use App\Domain\ValueObjects\Inventory;
+use App\Domain\VendingMachine\Contract\MachineStateRepository;
 use App\Domain\VendingMachine\Contract\MachineStateUuidGeneratorInterface;
 use App\Domain\VendingMachine\Model\Coin;
 use App\Domain\VendingMachine\Model\Item;
@@ -97,6 +98,9 @@ abstract class AbstractTestCase extends TestCase
         return 1;
     }
 
+    /**
+     * @return MachineStateUuidGeneratorInterface
+     */
     protected function machineUuidGenerator(): MachineStateUuidGeneratorInterface
     {
         $mock = $this
@@ -106,6 +110,24 @@ abstract class AbstractTestCase extends TestCase
         $mock
             ->method('generate')
             ->willReturn("foo-uuid");
+
+        return $mock;
+    }
+
+    /**
+     * @return MachineStateRepository
+     */
+    protected function machineStateRepository(): MachineStateRepository
+    {
+        $mock = $this
+            ->getMockBuilder(MachineStateRepository::class)
+            ->getMock();
+
+        $mock
+            ->method('saveState')
+            ->willReturnCallback(function (MachineState $machineState) {
+                return $machineState;
+            });
 
         return $mock;
     }
