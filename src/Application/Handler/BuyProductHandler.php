@@ -41,6 +41,9 @@ class BuyProductHandler
      */
     protected CurrentMachineState $currentStateService;
 
+    /**
+     * @var BuyProductUseCase
+     */
     protected BuyProductUseCase $useCase;
 
     /**
@@ -86,20 +89,22 @@ class BuyProductHandler
             );
         }
 
+        $exchange = $this->exchangeService->__invoke(
+            new CoinCollector($machineState->getChange()),
+            new CoinCollector($machineState->getInsertedCoins()),
+            $machineState->productSelected()
+        );
+
         $response = new VendingMachineResponse(
             true,
             [],
             $machineState,
-            $this->exchangeService->__invoke(
-                new CoinCollector($machineState->getChange()),
-                new CoinCollector($machineState->getInsertedCoins()),
-                $machineState->productSelected()
-            )
+            $exchange
         );
 
         $machineState = $this->useCase->__invoke(
             $machineState,
-            $this->exchangeService
+            $exchange
         );
 
         $this

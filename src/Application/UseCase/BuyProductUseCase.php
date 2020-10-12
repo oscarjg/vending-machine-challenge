@@ -9,6 +9,7 @@ use App\Domain\Exceptions\InvalidInsertedCoinValueException;
 use App\Domain\ValueObjects\CoinCollector;
 use App\Domain\ValueObjects\Inventory;
 use App\Domain\VendingMachine\Contract\MachineStateUuidGeneratorInterface;
+use App\Domain\VendingMachine\Model\Coin;
 use App\Domain\VendingMachine\Model\Item;
 use App\Domain\VendingMachine\Model\MachineState;
 
@@ -38,7 +39,7 @@ class BuyProductUseCase
 
     /**
      * @param MachineState $machineState
-     * @param ExchangeService $exchangeService
+     * @param CoinCollector $exchange
      *
      * @return MachineState
      * @throws InvalidInsertedCoinInstanceException
@@ -46,14 +47,8 @@ class BuyProductUseCase
      */
     public function __invoke(
         MachineState $machineState,
-        ExchangeService $exchangeService
+        CoinCollector $exchange
     ): MachineState {
-        $exchange = $exchangeService(
-            new CoinCollector($machineState->getChange()),
-            new CoinCollector($machineState->getInsertedCoins()),
-            $machineState->productSelected()
-        );
-
         return MachineStateFactory::createMachineState(
             $this->uuidGenerator->generate(),
             new CoinCollector([]),
@@ -76,16 +71,25 @@ class BuyProductUseCase
         $currentChange = $machineState->getChange();
         $currentInsertedCoins = $machineState->getInsertedCoins();
 
-        $balance = array_merge($currentChange, $currentInsertedCoins);
+        $balance = array_map(function (Coin $coin) {
+            return $coin->getValue();
+        }, array_merge($currentChange, $currentInsertedCoins));
 
         foreach ($exchange->getCoins() as $exchangeCoin) {
-            $key = array_search($exchangeCoin, $balance);
+            $key = array_search($exchangeCoin->getValue(), $balance);
+
             if ($key !== false) {
                 unset($balance[$key]);
             }
         }
 
-        return new CoinCollector($balance);
+        $coins = [];
+
+        foreach ($balance as $value) {
+            $coins[] = new Coin($value);
+        }
+
+        return new CoinCollector($coins);
     }
 
     /**

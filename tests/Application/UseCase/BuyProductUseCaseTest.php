@@ -44,7 +44,10 @@ class BuyProductUseCaseTest extends AbstractTestCase
 
         $state = $useCase(
             $state,
-            new ExchangeService()
+            new CoinCollector([
+                new Coin(25),
+                new Coin(10),
+            ])
         );
 
         $this->assertEquals(1465, $state->totalChange());

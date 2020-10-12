@@ -90,34 +90,53 @@ class BuyProductHandlerTest extends AbstractTestCase
     public function statesForSuccess(): array
     {
         return [
+//            [
+//                new MachineState(
+//                    "uuid",
+//                    new CoinCollector([
+//                        new Coin(25),
+//                        new Coin(25),
+//                        new Coin(25),
+//                        new Coin(25),
+//                    ]),
+//                    $this->defaultInventory(),
+//                    $this->defaultChange(),
+//                    1
+//                ),
+//                0
+//            ],
+//            [
+//                new MachineState(
+//                    "uuid",
+//                    new CoinCollector([
+//                        new Coin(25),
+//                        new Coin(25),
+//                        new Coin(25),
+//                        new Coin(25),
+//                        new Coin(5),
+//                    ]),
+//                    $this->defaultInventory(),
+//                    $this->defaultChange(),
+//                    1
+//                ),
+//                5
+//            ]
             [
                 new MachineState(
                     "uuid",
                     new CoinCollector([
-                        new Coin(25),
-                        new Coin(25),
-                        new Coin(25),
-                        new Coin(25),
+                        new Coin(10),
+                        new Coin(10),
+                        new Coin(10),
+                        new Coin(10),
+                        new Coin(10),
+                        new Coin(10),
+                        new Coin(10),
+
                     ]),
                     $this->defaultInventory(),
                     $this->defaultChange(),
-                    1
-                ),
-                0
-            ],
-            [
-                new MachineState(
-                    "uuid",
-                    new CoinCollector([
-                        new Coin(25),
-                        new Coin(25),
-                        new Coin(25),
-                        new Coin(25),
-                        new Coin(5),
-                    ]),
-                    $this->defaultInventory(),
-                    $this->defaultChange(),
-                    1
+                    2
                 ),
                 5
             ]

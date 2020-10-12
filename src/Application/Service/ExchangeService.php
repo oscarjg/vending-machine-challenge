@@ -81,6 +81,7 @@ class ExchangeService
 
             $exchangeMap[$exchange] = $exchangeMap[$exchange] - 1;
             $nextExchange = ($baseExchange - $exchange);
+
             $this->calculate($nextExchange, $nextExchange, $exchangeMap);
         } else {
             $this->calculate(($exchange - 5), $baseExchange, $exchangeMap);
