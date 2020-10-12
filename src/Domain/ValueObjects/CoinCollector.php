@@ -16,7 +16,7 @@ use App\Domain\VendingMachine\Model\MachineState;
 class CoinCollector
 {
     /**
-     * @var iterable
+     * @var Coin[]
      */
     protected iterable $coins;
 
@@ -36,11 +36,21 @@ class CoinCollector
     }
 
     /**
-     * @return iterable
+     * @return Coin[]
      */
     public function getCoins(): iterable
     {
         return $this->coins;
+    }
+
+    /**
+     * @return float
+     */
+    public function sum(): float
+    {
+        return array_reduce($this->coins, function (int $acc, Coin $coin) {
+            return $acc + $coin->getValue();
+        }, 0);
     }
 
     /**

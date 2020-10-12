@@ -19,6 +19,7 @@ class RefundMoneyUseCaseTest extends AbstractTestCase
 {
     /**
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     public function testUseCase()
     {

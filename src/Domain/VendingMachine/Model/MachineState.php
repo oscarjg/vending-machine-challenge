@@ -14,10 +14,10 @@ use App\Domain\ValueObjects\Inventory;
 class MachineState
 {
     public const ACCEPTED_COINS = [
-        0.05,
-        0.10,
-        0.25,
-        1.00,
+        5,
+        10,
+        25,
+        100,
     ];
 
     /**
@@ -31,7 +31,7 @@ class MachineState
     protected string $uuid;
 
     /**
-     * @var iterable
+     * @var Coin[]
      */
     protected iterable $insertedCoins;
 
@@ -46,7 +46,7 @@ class MachineState
     protected iterable $items;
 
     /**
-     * @var iterable
+     * @var Coin[]
      */
     protected iterable $change;
 

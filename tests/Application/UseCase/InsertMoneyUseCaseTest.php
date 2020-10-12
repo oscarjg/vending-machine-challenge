@@ -26,7 +26,7 @@ class InsertMoneyUseCaseTest extends AbstractTestCase
         $useCase = new InsertMoneyUseCase(
             $this->machineUuidGenerator()
         );
-        $coins = [0.25, 0.25, 1.00];
+        $coins = [25, 25, 100];
 
         foreach ($coins as $key => $coinValue) {
             $state = $useCase(
@@ -60,7 +60,7 @@ class InsertMoneyUseCaseTest extends AbstractTestCase
 
         $useCase->__invoke(
             $state,
-            0.15
+            15
         );
     }
 }

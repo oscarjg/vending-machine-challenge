@@ -19,6 +19,7 @@ class HasProductSelectedValidatorTest extends AbstractTestCase
 {
     /**
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     public function testIsNotValid()
     {
@@ -33,6 +34,7 @@ class HasProductSelectedValidatorTest extends AbstractTestCase
 
     /**
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     public function testIsValid()
     {

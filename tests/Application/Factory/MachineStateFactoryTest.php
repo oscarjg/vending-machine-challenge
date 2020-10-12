@@ -104,8 +104,8 @@ class MachineStateFactoryTest extends AbstractTestCase
         MachineStateFactory::createMachineState(
             "some-uuid",
             new CoinCollector([
-                new Coin(1.00),
-                new Coin(1.50),
+                new Coin(100),
+                new Coin(150),
             ]),
             $this->emptyInventory(),
             $this->emptyCoinsCollector(),
@@ -131,15 +131,15 @@ class MachineStateFactoryTest extends AbstractTestCase
             [
                 "foo-id",
                 new CoinCollector([
-                    new Coin(1.00),
-                    new Coin(1.00),
-                    new Coin(0.25),
+                    new Coin(100),
+                    new Coin(100),
+                    new Coin(25),
                 ]),
                 $this->defaultInventory(),
                 new CoinCollector([
-                    new Coin(1.00),
-                    new Coin(1.00),
-                    new Coin(1.00),
+                    new Coin(100),
+                    new Coin(100),
+                    new Coin(100),
                 ]),
                 $this->defaultItemSelector()
             ]

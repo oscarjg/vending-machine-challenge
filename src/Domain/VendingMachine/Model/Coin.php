@@ -16,24 +16,24 @@ class Coin
     protected string $id;
 
     /**
-     * @var float
+     * @var int
      */
-    protected float $value;
+    protected int $value;
 
     /**
      * Coin constructor.
      *
-     * @param float $value
+     * @param int $value
      */
-    public function __construct(float $value)
+    public function __construct(int $value)
     {
         $this->value = $value;
     }
 
     /**
-     * @return float
+     * @return int
      */
-    public function getValue(): float
+    public function getValue(): int
     {
         return $this->value;
     }

@@ -70,23 +70,23 @@ class HasEnoughChangeValidatorTest extends AbstractTestCase
         return [
             [
                 $this->coinsCollector([
-                    new Coin(1.00),
-                    new Coin(1.00)
+                    new Coin(100),
+                    new Coin(100)
                 ]),
                 $this->coinsCollector([
-                    new Coin(0.25),
-                    new Coin(0.25),
-                    new Coin(0.25),
+                    new Coin(25),
+                    new Coin(25),
+                    new Coin(25),
                 ]),
             ],
             [
                 $this->coinsCollector([
-                    new Coin(1.00),
-                    new Coin(0.25)
+                    new Coin(100),
+                    new Coin(25)
                 ]),
                 $this->coinsCollector([
-                    new Coin(0.05),
-                    new Coin(0.05),
+                    new Coin(5),
+                    new Coin(5),
                 ]),
             ],
         ];
@@ -106,11 +106,11 @@ class HasEnoughChangeValidatorTest extends AbstractTestCase
             ],
             [
                 $this->coinsCollector([
-                    new Coin(1.00),
-                    new Coin(1.00),
+                    new Coin(100),
+                    new Coin(100),
                 ]),
                 $this->coinsCollector([
-                    new Coin(1.00),
+                    new Coin(100),
                 ]),
             ],
         ];

@@ -50,10 +50,10 @@ abstract class AbstractTestCase extends TestCase
         $coins = [];
 
         for ($x = 0; $x < 10; $x++) {
-            $coins[] = new Coin(0.05);
-            $coins[] = new Coin(0.10);
-            $coins[] = new Coin(0.25);
-            $coins[] = new Coin(1.00);
+            $coins[] = new Coin(5);
+            $coins[] = new Coin(10);
+            $coins[] = new Coin(25);
+            $coins[] = new Coin(100);
         }
 
         return new CoinCollector($coins);
@@ -65,9 +65,9 @@ abstract class AbstractTestCase extends TestCase
     protected function defaultInventory(): Inventory
     {
         return new Inventory([
-            new Item(new Product("p1", 1.00), 10, 1),
-            new Item(new Product("p2", 0.65), 20, 2),
-            new Item(new Product("p3", 1.50), 30, 3),
+            new Item(new Product("p1", 100), 10, 1),
+            new Item(new Product("p2", 065), 20, 2),
+            new Item(new Product("p3", 150), 30, 3),
         ]);
     }
 

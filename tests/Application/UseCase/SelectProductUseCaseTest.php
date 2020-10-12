@@ -4,6 +4,7 @@ namespace Tests\Application\UseCase;
 
 use App\Application\UseCase\SelectProductUseCase;
 use App\Domain\Exceptions\InvalidInsertedCoinInstanceException;
+use App\Domain\Exceptions\InvalidInsertedCoinValueException;
 use App\Domain\Exceptions\InvalidProductSelectionValueException;
 use Tests\AbstractTestCase;
 
@@ -18,6 +19,7 @@ class SelectProductUseCaseTest extends AbstractTestCase
     /**
      * @throws InvalidInsertedCoinInstanceException
      * @throws InvalidProductSelectionValueException
+     * @throws InvalidInsertedCoinValueException
      */
     public function testUseCase()
     {
@@ -37,6 +39,7 @@ class SelectProductUseCaseTest extends AbstractTestCase
 
     /**
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      * @throws InvalidProductSelectionValueException
      */
     public function testUseCaseThrowsInvalidProductSelection()

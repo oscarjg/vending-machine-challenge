@@ -22,6 +22,7 @@ class HasProductStockValidatorTest extends AbstractTestCase
 {
     /**
      * @throws InvalidInsertedCoinInstanceException
+     * @throws InvalidInsertedCoinValueException
      */
     public function testIsValid()
     {
@@ -78,9 +79,9 @@ class HasProductStockValidatorTest extends AbstractTestCase
     private function inventoryWithoutStock(): Inventory
     {
         return new Inventory([
-            new Item(new Product("p1", 1.00), 0, 1),
-            new Item(new Product("p2", 0.65), 0, 2),
-            new Item(new Product("p3", 1.50), 0, 3),
+            new Item(new Product("p1", 100), 0, 1),
+            new Item(new Product("p2", 65), 0, 2),
+            new Item(new Product("p3", 150), 0, 3),
         ]);
     }
 }

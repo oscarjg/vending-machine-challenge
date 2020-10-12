@@ -47,8 +47,8 @@ class HasEnoughAmountValidatorTest extends AbstractTestCase
         $isValid = $validator->isValid(
             $this->machineState(
                 $this->insertedCoins([
-                    new Coin(0.25),
-                    new Coin(0.25)
+                    new Coin(25),
+                    new Coin(25)
                 ]),
                 1
             )
@@ -68,7 +68,7 @@ class HasEnoughAmountValidatorTest extends AbstractTestCase
         $isValid = $validator->isValid(
             $this->machineState(
                 $this->insertedCoins([
-                    new Coin(1.00)
+                    new Coin(100)
                 ]),
                 1
             )
@@ -88,8 +88,8 @@ class HasEnoughAmountValidatorTest extends AbstractTestCase
         $isValid = $validator->isValid(
             $this->machineState(
                 $this->insertedCoins([
-                    new Coin(0.25),
-                    new Coin(1.00)
+                    new Coin(25),
+                    new Coin(100)
                 ]),
                 1
             )
