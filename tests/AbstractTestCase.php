@@ -66,7 +66,7 @@ abstract class AbstractTestCase extends TestCase
     {
         return new Inventory([
             new Item(new Product("p1", 100), 10, 1),
-            new Item(new Product("p2", 065), 20, 2),
+            new Item(new Product("p2", 65), 20, 2),
             new Item(new Product("p3", 150), 30, 3),
         ]);
     }
