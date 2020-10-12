@@ -13,20 +13,27 @@ use App\Domain\VendingMachine\Model\MachineState;
 class VendingMachineResponse
 {
     protected bool $isValid;
+
     protected array $errors;
-    protected MachineState $currentState;
-    protected CoinCollector $exchange;
+
+    protected ?MachineState $currentState;
+
+    protected ?CoinCollector $exchange;
 
     /**
      * VendingMachineResponse constructor.
      *
      * @param bool $isValid
      * @param array $errors
-     * @param MachineState $currentState
-     * @param CoinCollector $exchange
+     * @param MachineState|null $currentState
+     * @param CoinCollector|null $exchange
      */
-    public function __construct(bool $isValid, array $errors, MachineState $currentState, CoinCollector $exchange)
-    {
+    public function __construct(
+        bool $isValid,
+        array $errors,
+        ?MachineState $currentState = null,
+        ?CoinCollector $exchange = null
+    ) {
         $this->isValid = $isValid;
         $this->errors = $errors;
         $this->currentState = $currentState;
@@ -52,7 +59,7 @@ class VendingMachineResponse
     /**
      * @return MachineState
      */
-    public function getCurrentState(): MachineState
+    public function getCurrentState(): ?MachineState
     {
         return $this->currentState;
     }
@@ -60,7 +67,7 @@ class VendingMachineResponse
     /**
      * @return CoinCollector
      */
-    public function getExchange(): CoinCollector
+    public function getExchange(): ?CoinCollector
     {
         return $this->exchange;
     }

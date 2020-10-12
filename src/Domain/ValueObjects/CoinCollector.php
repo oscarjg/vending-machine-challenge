@@ -38,7 +38,7 @@ class CoinCollector
     /**
      * @return Coin[]
      */
-    public function getCoins(): iterable
+    public function getCoins()
     {
         return $this->coins;
     }
@@ -68,11 +68,18 @@ class CoinCollector
                 throw new InvalidInsertedCoinValueException(
                     sprintf(
                         'Invalid Coin value. Only %s are accepted, %s received',
-                        implode(",", MachineState::ACCEPTED_COINS),
-                        $coin->getValue()
+                        implode(",", array_map(function ($value) {
+                            return $this->formatNumber($value);
+                        }, MachineState::ACCEPTED_COINS)),
+                        $this->formatNumber($coin->getValue())
                     )
                 );
             }
         }
+    }
+
+    private function formatNumber($number)
+    {
+        return number_format($number / 100, 2);
     }
 }

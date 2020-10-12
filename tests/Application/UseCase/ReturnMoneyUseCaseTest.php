@@ -2,11 +2,9 @@
 
 namespace Tests\Application\UseCase;
 
-use App\Application\UseCase\InsertMoneyUseCase;
-use App\Application\UseCase\RefundMoneyUseCase;
+use App\Application\UseCase\ReturnMoneyUseCase;
 use App\Domain\Exceptions\InvalidInsertedCoinInstanceException;
 use App\Domain\Exceptions\InvalidInsertedCoinValueException;
-use App\Domain\VendingMachine\Model\Coin;
 use Tests\AbstractTestCase;
 
 /**
@@ -15,7 +13,7 @@ use Tests\AbstractTestCase;
  * @author Oscar Jimenez <oscarjg19.developer@gmail.com>
  * @package Tests\Application\UseCase
  */
-class RefundMoneyUseCaseTest extends AbstractTestCase
+class ReturnMoneyUseCaseTest extends AbstractTestCase
 {
     /**
      * @throws InvalidInsertedCoinInstanceException
@@ -25,7 +23,7 @@ class RefundMoneyUseCaseTest extends AbstractTestCase
     {
         $state = $this->initialState();
 
-        $useCase = new RefundMoneyUseCase(
+        $useCase = new ReturnMoneyUseCase(
             $this->machineUuidGenerator()
         );
 

@@ -50,7 +50,7 @@ class SelectProductUseCase
 
         return MachineStateFactory::createMachineState(
             $this->uuidGenerator->generate(),
-            new CoinCollector([]),
+            new CoinCollector($machineState->getInsertedCoins()),
             new Inventory($machineState->getItems()),
             new CoinCollector($machineState->getChange()),
             $productSelection

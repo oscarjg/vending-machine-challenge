@@ -31,6 +31,6 @@ class HasEnoughAmountValidator implements VendingMachineValidatorInterface
 
     public function message(): string
     {
-        return "There aren't enough coins to buy this product";
+        return "The total amount inserted it's not enough. Please insert coins to buy a product";
     }
 }

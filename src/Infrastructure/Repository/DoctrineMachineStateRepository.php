@@ -13,7 +13,7 @@ use App\Domain\VendingMachine\Contract\MachineStateRepository as ModelRepository
  * @author Oscar Jimenez <oscarjg19.developer@gmail.com>
  * @package App\Infrastructure\Doctrine
  */
-class MachineStateRepository extends ServiceDocumentRepository implements ModelRepository
+class DoctrineMachineStateRepository extends ServiceDocumentRepository implements ModelRepository
 {
     /**
      * @param ManagerRegistry $managerRegistry
@@ -43,14 +43,15 @@ class MachineStateRepository extends ServiceDocumentRepository implements ModelR
     }
 
     /**
-     * @param int $stateId
-     *
      * @return MachineState|null
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
-    public function fetchCurrentState(int $stateId): ?MachineState
+    public function fetchCurrentState(): ?MachineState
     {
-        return $this->find($stateId);
+        return $this
+            ->createQueryBuilder()
+            ->sort('id', 'desc')
+            ->limit(1)
+            ->getQuery()
+            ->getSingleResult();
     }
 }

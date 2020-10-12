@@ -38,7 +38,7 @@ class MachineState
     /**
      * @var ?int
      */
-    protected ?int $itemSelector;
+    protected ?int $itemSelector = null;
 
     /**
      * @var Item[]
@@ -94,6 +94,10 @@ class MachineState
      */
     public function getInsertedCoins(): iterable
     {
+        if (is_object($this->insertedCoins)) {
+            return $this->insertedCoins->toArray();
+        }
+
         return $this->insertedCoins;
     }
 
@@ -108,8 +112,12 @@ class MachineState
     /**
      * @return Item[]
      */
-    public function getItems(): array
+    public function getItems()
     {
+        if (is_object($this->items)) {
+            return $this->items->toArray();
+        }
+
         return $this->items;
     }
 
@@ -118,6 +126,10 @@ class MachineState
      */
     public function getChange(): iterable
     {
+        if (is_object($this->change)) {
+            return $this->change->toArray();
+        }
+
         return $this->change;
     }
 
@@ -126,7 +138,7 @@ class MachineState
      */
     public function totalAmount(): float
     {
-        return array_reduce($this->insertedCoins, function (int $acc, Coin $coin) {
+        return array_reduce($this->getInsertedCoins(), function (int $acc, Coin $coin) {
             return $acc + $coin->getValue();
         }, 0);
     }
@@ -136,7 +148,7 @@ class MachineState
      */
     public function totalChange(): float
     {
-        return array_reduce($this->change, function (int $acc, Coin $coin) {
+        return array_reduce($this->getChange(), function (int $acc, Coin $coin) {
             return $acc + $coin->getValue();
         }, 0);
     }
@@ -173,6 +185,6 @@ class MachineState
             return null;
         }
 
-        return  $item->getProduct();
+        return $item->getProduct();
     }
 }

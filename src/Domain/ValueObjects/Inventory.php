@@ -28,9 +28,9 @@ class Inventory
     }
 
     /**
-     * @return iterable
+     * @return Item[]
      */
-    public function getItems(): iterable
+    public function getItems()
     {
         return $this->items;
     }

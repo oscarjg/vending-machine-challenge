@@ -11,12 +11,12 @@ use App\Domain\VendingMachine\Contract\MachineStateUuidGeneratorInterface;
 use App\Domain\VendingMachine\Model\MachineState;
 
 /**
- * Class InsertMoneyUseCase
+ * Class ReturnMoneyUseCase
  *
  * @author Oscar Jimenez <oscarjg19.developer@gmail.com>
  * @package App\Application\UseCase
  */
-class RefundMoneyUseCase
+class ReturnMoneyUseCase
 {
     /**
      * @var MachineStateUuidGeneratorInterface

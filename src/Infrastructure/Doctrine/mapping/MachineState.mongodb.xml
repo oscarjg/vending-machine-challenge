@@ -7,7 +7,10 @@
     <document name="App\Domain\VendingMachine\Model\MachineState">
         <id strategy="INCREMENT"/>
         <field type="string" name="uuid" />
-        <embed-many field="insertedCoins" target-document="App\Domain\VendingMachine\Model\Coin"/>
+        <field type="integer" name="itemSelector" />
+        <embed-many field="insertedCoins" target-document="App\Domain\VendingMachine\Model\Coin" />
+        <embed-many field="change" target-document="App\Domain\VendingMachine\Model\Coin"/>
+        <embed-many field="items" target-document="App\Domain\VendingMachine\Model\Item"/>
         <indexes>
             <index>
                 <option name="unique" value="uuid"/>

@@ -1,9 +1,10 @@
 <?php
 
-namespace Tests\Application\Service;
+namespace Tests\Application\Handler;
 
-use App\Application\Service\BuyProductHandler;
+use App\Application\Handler\BuyProductHandler;
 use App\Application\Service\ExchangeService;
+use App\Application\UseCase\BuyProductUseCase;
 use App\Application\Validator\HasEnoughAmountValidator;
 use App\Application\Validator\HasEnoughChangeValidator;
 use App\Application\Validator\HasProductSelectedValidator;
@@ -38,12 +39,16 @@ class BuyProductHandlerTest extends AbstractTestCase
     public function testErrorsExpected(MachineState $machineState, int $expectedCountErrors)
     {
         $handler = new BuyProductHandler(
+            new BuyProductUseCase(
+                $this->machineUuidGenerator(),
+            ),
+            $this->currentMachineStateService($machineState),
             $this->invalidators(),
             new ExchangeService(),
             $this->machineStateRepository()
         );
 
-        $response = $handler->run($machineState);
+        $response = $handler();
 
         $this->assertFalse($response->isValid());
         $this->assertCount($expectedCountErrors, $response->getErrors());
@@ -61,12 +66,16 @@ class BuyProductHandlerTest extends AbstractTestCase
     public function testSuccessExpected(MachineState $machineState, int $exchangeExpected)
     {
         $handler = new BuyProductHandler(
+            new BuyProductUseCase(
+                $this->machineUuidGenerator(),
+            ),
+            $this->currentMachineStateService($machineState),
             $this->invalidators(),
             new ExchangeService(),
             $this->machineStateRepository()
         );
 
-        $response = $handler->run($machineState);
+        $response = $handler();
 
         $this->assertTrue($response->isValid());
         $this->assertCount(0, $response->getErrors());

@@ -1,0 +1,14 @@
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                        https://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd"
+>
+
+    <embedded-document name="App\Domain\VendingMachine\Model\Item" read-only="true">
+        <id />
+        <field name="quantity" type="integer"/>
+        <field name="selector" type="integer"/>
+        <embed-one field="product" target-document="App\Domain\VendingMachine\Model\Product"/>
+    </embedded-document>
+
+</doctrine-mongo-mapping>

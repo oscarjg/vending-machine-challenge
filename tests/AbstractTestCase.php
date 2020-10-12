@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Application\Service\CurrentMachineState;
 use App\Domain\Exceptions\InvalidInsertedCoinInstanceException;
 use App\Domain\Exceptions\InvalidInsertedCoinValueException;
 use App\Domain\ValueObjects\CoinCollector;
@@ -126,6 +127,27 @@ abstract class AbstractTestCase extends TestCase
         $mock
             ->method('saveState')
             ->willReturnCallback(function (MachineState $machineState) {
+                return $machineState;
+            });
+
+        return $mock;
+    }
+
+    /**
+     * @param MachineState $machineState
+     *
+     * @return CurrentMachineState
+     */
+    protected function currentMachineStateService(MachineState $machineState): CurrentMachineState
+    {
+        $mock = $this
+            ->getMockBuilder(CurrentMachineState::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mock
+            ->method('__invoke')
+            ->willReturnCallback(function () use ($machineState) {
                 return $machineState;
             });
 

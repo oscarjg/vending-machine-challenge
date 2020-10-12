@@ -13,5 +13,5 @@ use App\Domain\VendingMachine\Model\MachineState;
 interface MachineStateRepository
 {
     public function saveState(MachineState $machineState): MachineState;
-    public function fetchCurrentState(int $stateId): ?MachineState;
+    public function fetchCurrentState(): ?MachineState;
 }

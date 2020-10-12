@@ -10,8 +10,24 @@ namespace App\Domain\VendingMachine\Model;
  */
 class Item
 {
+    /**
+     * @var string
+     */
+    protected string $id;
+
+    /**
+     * @var Product
+     */
     protected Product $product;
+
+    /**
+     * @var int
+     */
     protected int $quantity;
+
+    /**
+     * @var int
+     */
     protected int $selector;
 
     /**
